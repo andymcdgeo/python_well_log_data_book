@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Getting Started - Tools and Best Practices – Python for Well Log Data Analysis and Visualisation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/well-data-files.html" rel="next">
+<link href="../chapters/why-python-essential.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9e146f66a68afc964fc3d306fb1de714.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script data-goatcounter="https://andymcdgeo.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/getting-started.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started - Tools and Best Practices</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Python for Well Log Data Analysis and Visualisation</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/why-python-essential.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why Python is Essential in Geoscience</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/getting-started.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started - Tools and Best Practices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/well-data-files.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Well Data File Formats</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/data-visualisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualisation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setting-up-your-python-environment" id="toc-setting-up-your-python-environment" class="nav-link active" data-scroll-target="#setting-up-your-python-environment"><span class="header-section-number">2.1</span> Setting Up Your Python Environment</a>
+  <ul>
+  <li><a href="#installing-python" id="toc-installing-python" class="nav-link" data-scroll-target="#installing-python"><span class="header-section-number">2.1.1</span> Installing Python</a></li>
+  <li><a href="#jupyter-notebooks" id="toc-jupyter-notebooks" class="nav-link" data-scroll-target="#jupyter-notebooks"><span class="header-section-number">2.1.2</span> Jupyter Notebooks</a></li>
+  <li><a href="#beyond-notebooks-ides" id="toc-beyond-notebooks-ides" class="nav-link" data-scroll-target="#beyond-notebooks-ides"><span class="header-section-number">2.1.3</span> Beyond Notebooks: IDEs</a></li>
+  <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages"><span class="header-section-number">2.1.4</span> Installing Packages</a></li>
+  </ul></li>
+  <li><a href="#getting-started-with-python" id="toc-getting-started-with-python" class="nav-link" data-scroll-target="#getting-started-with-python"><span class="header-section-number">2.2</span> Getting Started With Python</a>
+  <ul>
+  <li><a href="#variables-and-basic-data-types" id="toc-variables-and-basic-data-types" class="nav-link" data-scroll-target="#variables-and-basic-data-types"><span class="header-section-number">2.2.1</span> Variables and basic data types</a></li>
+  <li><a href="#lists-and-dictionaries" id="toc-lists-and-dictionaries" class="nav-link" data-scroll-target="#lists-and-dictionaries"><span class="header-section-number">2.2.2</span> Lists and dictionaries</a></li>
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link" data-scroll-target="#for-loops"><span class="header-section-number">2.2.3</span> For loops</a></li>
+  <li><a href="#while-loops" id="toc-while-loops" class="nav-link" data-scroll-target="#while-loops"><span class="header-section-number">2.2.4</span> While loops</a></li>
+  <li><a href="#conditionals-if-elif-else" id="toc-conditionals-if-elif-else" class="nav-link" data-scroll-target="#conditionals-if-elif-else"><span class="header-section-number">2.2.5</span> Conditionals (<code>if</code>, <code>elif</code>, <code>else</code>)</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">2.2.6</span> Functions</a></li>
+  <li><a href="#f-strings" id="toc-f-strings" class="nav-link" data-scroll-target="#f-strings"><span class="header-section-number">2.2.7</span> F-strings</a></li>
+  <li><a href="#list-comprehensions" id="toc-list-comprehensions" class="nav-link" data-scroll-target="#list-comprehensions"><span class="header-section-number">2.2.8</span> List comprehensions</a></li>
+  <li><a href="#imports-and-libraries" id="toc-imports-and-libraries" class="nav-link" data-scroll-target="#imports-and-libraries"><span class="header-section-number">2.2.9</span> Imports and libraries</a></li>
+  <li><a href="#a-quick-note-on-errors" id="toc-a-quick-note-on-errors" class="nav-link" data-scroll-target="#a-quick-note-on-errors"><span class="header-section-number">2.2.10</span> A quick note on errors</a></li>
+  <li><a href="#keep-it-practical" id="toc-keep-it-practical" class="nav-link" data-scroll-target="#keep-it-practical"><span class="header-section-number">2.2.11</span> Keep it practical</a></li>
+  </ul></li>
+  <li><a href="#working-with-pandas" id="toc-working-with-pandas" class="nav-link" data-scroll-target="#working-with-pandas"><span class="header-section-number">2.3</span> Working with pandas</a>
+  <ul>
+  <li><a href="#creating-a-dataframe" id="toc-creating-a-dataframe" class="nav-link" data-scroll-target="#creating-a-dataframe"><span class="header-section-number">2.3.1</span> Creating a DataFrame</a></li>
+  <li><a href="#inspecting-data" id="toc-inspecting-data" class="nav-link" data-scroll-target="#inspecting-data"><span class="header-section-number">2.3.2</span> Inspecting data</a></li>
+  <li><a href="#selecting-columns" id="toc-selecting-columns" class="nav-link" data-scroll-target="#selecting-columns"><span class="header-section-number">2.3.3</span> Selecting columns</a></li>
+  <li><a href="#filtering-rows" id="toc-filtering-rows" class="nav-link" data-scroll-target="#filtering-rows"><span class="header-section-number">2.3.4</span> Filtering rows</a></li>
+  <li><a href="#handling-missing-data" id="toc-handling-missing-data" class="nav-link" data-scroll-target="#handling-missing-data"><span class="header-section-number">2.3.5</span> Handling missing data</a></li>
+  <li><a href="#grouping-and-aggregation" id="toc-grouping-and-aggregation" class="nav-link" data-scroll-target="#grouping-and-aggregation"><span class="header-section-number">2.3.6</span> Grouping and aggregation</a></li>
+  </ul></li>
+  <li><a href="#working-with-numpy" id="toc-working-with-numpy" class="nav-link" data-scroll-target="#working-with-numpy"><span class="header-section-number">2.4</span> Working with NumPy</a>
+  <ul>
+  <li><a href="#numpy-arrays" id="toc-numpy-arrays" class="nav-link" data-scroll-target="#numpy-arrays"><span class="header-section-number">2.4.1</span> NumPy arrays</a></li>
+  <li><a href="#common-operations" id="toc-common-operations" class="nav-link" data-scroll-target="#common-operations"><span class="header-section-number">2.4.2</span> Common operations</a></li>
+  </ul></li>
+  <li><a href="#learning-python" id="toc-learning-python" class="nav-link" data-scroll-target="#learning-python"><span class="header-section-number">2.5</span> Learning Python</a>
+  <ul>
+  <li><a href="#books" id="toc-books" class="nav-link" data-scroll-target="#books"><span class="header-section-number">2.5.1</span> Books</a></li>
+  <li><a href="#online-courses-and-tutorials" id="toc-online-courses-and-tutorials" class="nav-link" data-scroll-target="#online-courses-and-tutorials"><span class="header-section-number">2.5.2</span> Online courses and tutorials</a></li>
+  <li><a href="#geoscience-specific-resources" id="toc-geoscience-specific-resources" class="nav-link" data-scroll-target="#geoscience-specific-resources"><span class="header-section-number">2.5.3</span> Geoscience-specific resources</a></li>
+  <li><a href="#using-ai-to-help-you-learn" id="toc-using-ai-to-help-you-learn" class="nav-link" data-scroll-target="#using-ai-to-help-you-learn"><span class="header-section-number">2.5.4</span> Using AI to help you learn</a></li>
+  </ul></li>
+  <li><a href="#writing-better-python-code" id="toc-writing-better-python-code" class="nav-link" data-scroll-target="#writing-better-python-code"><span class="header-section-number">2.6</span> Writing Better Python Code</a>
+  <ul>
+  <li><a href="#use-meaningful-variable-names" id="toc-use-meaningful-variable-names" class="nav-link" data-scroll-target="#use-meaningful-variable-names"><span class="header-section-number">2.6.1</span> Use meaningful variable names</a></li>
+  <li><a href="#add-comments-that-explain-the-why" id="toc-add-comments-that-explain-the-why" class="nav-link" data-scroll-target="#add-comments-that-explain-the-why"><span class="header-section-number">2.6.2</span> Add comments that explain the why</a></li>
+  <li><a href="#avoid-magic-numbers" id="toc-avoid-magic-numbers" class="nav-link" data-scroll-target="#avoid-magic-numbers"><span class="header-section-number">2.6.3</span> Avoid magic numbers</a></li>
+  </ul></li>
+  <li><a href="#python-output-for-geoscience-data" id="toc-python-output-for-geoscience-data" class="nav-link" data-scroll-target="#python-output-for-geoscience-data"><span class="header-section-number">2.7</span> Python Output for Geoscience Data</a>
+  <ul>
+  <li><a href="#pprint" id="toc-pprint" class="nav-link" data-scroll-target="#pprint"><span class="header-section-number">2.7.1</span> pprint</a></li>
+  <li><a href="#tabulate" id="toc-tabulate" class="nav-link" data-scroll-target="#tabulate"><span class="header-section-number">2.7.2</span> tabulate</a></li>
+  <li><a href="#rich" id="toc-rich" class="nav-link" data-scroll-target="#rich"><span class="header-section-number">2.7.3</span> rich</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting Started - Tools and Best Practices</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="setting-up-your-python-environment" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="setting-up-your-python-environment"><span class="header-section-number">2.1</span> Setting Up Your Python Environment</h2>
+<p>Before writing any code, you need a working Python environment on your machine. This section covers the essentials: installing Python, running code in Jupyter Notebooks, and installing the libraries used throughout this book.</p>
+<section id="installing-python" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="installing-python"><span class="header-section-number">2.1.1</span> Installing Python</h3>
+<p>There are two main routes to getting Python installed:</p>
+<p><strong>Anaconda (recommended for scientific work)</strong></p>
+<p><a href="https://www.anaconda.com/download">Anaconda</a> is a Python distribution designed for data science and scientific computing. It comes pre-installed with many of the libraries used in this book, including <code>pandas</code>, <code>numpy</code>, <code>matplotlib</code>, and <code>jupyter</code>. This means you can get started without having to install each library individually.</p>
+<p>After downloading and installing Anaconda, you will have access to the Anaconda Navigator, a graphical interface for launching Jupyter Notebooks, managing environments, and installing packages.</p>
+<p>For a lighter alternative, <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> installs just the core Python interpreter and the <code>conda</code> package manager, letting you add only the libraries you need.</p>
+<p><strong>Standard Python from python.org</strong></p>
+<p>You can also download Python directly from <a href="https://www.python.org/downloads/">python.org</a>. This gives you a minimal installation and you will need to install libraries yourself using <code>pip</code>. This is a perfectly valid approach, but for newcomers to scientific Python, Anaconda tends to be the smoother experience.</p>
+</section>
+<section id="jupyter-notebooks" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="jupyter-notebooks"><span class="header-section-number">2.1.2</span> Jupyter Notebooks</h3>
+<p>Most of the examples in this book are designed to be run in <a href="https://jupyter.org/">Jupyter Notebooks</a>. A notebook is an interactive document that combines code, output, and narrative text in a single place. You write code in cells, run each cell individually, and see the results immediately below.</p>
+<p>This makes notebooks ideal for data exploration and learning. You can experiment with a line of code, see the result, adjust it, and move on, all without leaving the document.</p>
+<p>To launch a notebook:</p>
+<ul>
+<li>If you installed Anaconda, open Anaconda Navigator and click <strong>Launch</strong> under Jupyter Notebook.</li>
+<li>Alternatively, open a terminal and type:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> notebook</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This will open your web browser with the Jupyter file explorer, from which you can create a new notebook.</p>
+<p><strong>Key concepts:</strong></p>
+<ul>
+<li><strong>Code cells</strong> contain Python code. Press <code>Shift + Enter</code> to run a cell and move to the next one.</li>
+<li><strong>Markdown cells</strong> contain formatted text, which is useful for adding notes and explanations alongside your code.</li>
+<li><strong>Kernel</strong> is the Python process running behind the scenes. If things behave unexpectedly, try restarting the kernel from the Kernel menu and running your cells again from the top.</li>
+</ul>
+</section>
+<section id="beyond-notebooks-ides" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="beyond-notebooks-ides"><span class="header-section-number">2.1.3</span> Beyond Notebooks: IDEs</h3>
+<p>As your Python code becomes more complex, you may want to move beyond notebooks into an Integrated Development Environment (IDE). An IDE provides tools like code completion, debugging, file management, and version control integration that make larger projects easier to manage.</p>
+<p>Two popular choices for Python are:</p>
+<ul>
+<li><a href="https://code.visualstudio.com/">Visual Studio Code</a> (VS Code): free, lightweight, and highly extensible. It also has excellent support for running Jupyter Notebooks directly within the editor.</li>
+<li><a href="https://www.jetbrains.com/pycharm/">PyCharm</a>: a more full-featured Python IDE with a free community edition.</li>
+</ul>
+<p>You do not need an IDE to follow this book. Jupyter Notebooks are sufficient for all the examples. However, if you find yourself building larger scripts or reusable functions, an IDE is worth exploring.</p>
+</section>
+<section id="installing-packages" class="level3" data-number="2.1.4">
+<h3 data-number="2.1.4" class="anchored" data-anchor-id="installing-packages"><span class="header-section-number">2.1.4</span> Installing Packages</h3>
+<p>Python’s strength lies in its ecosystem of libraries. When you need a library that is not already installed, you can add it using <code>pip</code> (Python’s built-in package manager) or <code>conda</code> (if you are using Anaconda).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install lasio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>or</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> conda-forge lasio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The core libraries used throughout this book are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Library</th>
+<th>Purpose</th>
+<th>Install</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pandas</code></td>
+<td>Tabular data manipulation</td>
+<td>Included with Anaconda</td>
+</tr>
+<tr class="even">
+<td><code>numpy</code></td>
+<td>Numerical computing</td>
+<td>Included with Anaconda</td>
+</tr>
+<tr class="odd">
+<td><code>matplotlib</code></td>
+<td>Plotting and visualisation</td>
+<td>Included with Anaconda</td>
+</tr>
+<tr class="even">
+<td><code>lasio</code></td>
+<td>Reading LAS well log files</td>
+<td><code>pip install lasio</code></td>
+</tr>
+<tr class="odd">
+<td><code>dlisio</code></td>
+<td>Reading DLIS well log files</td>
+<td><code>pip install dlisio</code></td>
+</tr>
+<tr class="even">
+<td><code>seaborn</code></td>
+<td>Statistical visualisation</td>
+<td>Included with Anaconda</td>
+</tr>
+</tbody>
+</table>
+<p>If you installed Python via Anaconda, most of these are already available. You will only need to install <code>lasio</code> and <code>dlisio</code> separately.</p>
+</section>
+</section>
+<section id="getting-started-with-python" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="getting-started-with-python"><span class="header-section-number">2.2</span> Getting Started With Python</h2>
+<p>This book is not a full Python course, but it helps to understand a few core concepts before we start working with well log data.</p>
+<p>The goal of this section is simple: give you enough Python to follow the examples confidently, without trying to reteach the entire language.</p>
+<section id="variables-and-basic-data-types" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="variables-and-basic-data-types"><span class="header-section-number">2.2.1</span> Variables and basic data types</h3>
+<p>A variable is just a named container for a value.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>well_name <span class="op">=</span> <span class="st">"15/9-19"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>top_depth <span class="op">=</span> <span class="fl">3120.0</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>has_density_log <span class="op">=</span> <span class="va">True</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In practice, you will use variables to store curve names, depths, cut-offs, file paths, and intermediate calculations.</p>
+</section>
+<section id="lists-and-dictionaries" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="lists-and-dictionaries"><span class="header-section-number">2.2.2</span> Lists and dictionaries</h3>
+<p>A list stores an ordered collection of values.<br>
+A dictionary stores key-value pairs.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>curves <span class="op">=</span> [<span class="st">"GR"</span>, <span class="st">"RHOB"</span>, <span class="st">"NPHI"</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>curve_units <span class="op">=</span> {<span class="st">"GR"</span>: <span class="st">"API"</span>, <span class="st">"RHOB"</span>: <span class="st">"g/cc"</span>, <span class="st">"NPHI"</span>: <span class="st">"v/v"</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These are used constantly in this book for selecting groups of curves, storing labels, and mapping lithology or formation metadata.</p>
+</section>
+<section id="for-loops" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="for-loops"><span class="header-section-number">2.2.3</span> For loops</h3>
+<p>A <code>for</code> loop is used when you want to repeat a task for each item in a collection.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>curves <span class="op">=</span> [<span class="st">"GR"</span>, <span class="st">"RHOB"</span>, <span class="st">"NPHI"</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> curve <span class="kw">in</span> curves:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Processing curve: </span><span class="sc">{</span>curve<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is one of the most useful patterns in well log work.<br>
+Instead of writing similar code three or ten times, you loop through your curves once.</p>
+</section>
+<section id="while-loops" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="while-loops"><span class="header-section-number">2.2.4</span> While loops</h3>
+<p>A <code>while</code> loop repeats as long as a condition is true.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>depth <span class="op">=</span> <span class="dv">3000</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> depth <span class="op">&lt;=</span> <span class="dv">3010</span>:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(depth)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    depth <span class="op">+=</span> <span class="fl">0.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>while</code> loops are less common than <code>for</code> loops in data analysis, but they are useful when you do not know in advance how many iterations you need.</p>
+<p>Always make sure your condition will eventually become false, otherwise you create an infinite loop.</p>
+</section>
+<section id="conditionals-if-elif-else" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="conditionals-if-elif-else"><span class="header-section-number">2.2.5</span> Conditionals (<code>if</code>, <code>elif</code>, <code>else</code>)</h3>
+<p>Conditionals let your code make decisions.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>gr <span class="op">=</span> <span class="dv">115</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> gr <span class="op">&lt;</span> <span class="dv">75</span>:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    facies <span class="op">=</span> <span class="st">"clean"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> gr <span class="op">&lt;</span> <span class="dv">110</span>:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    facies <span class="op">=</span> <span class="st">"mixed"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    facies <span class="op">=</span> <span class="st">"shaley"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In this book, conditionals are used for quality control, data screening, and simple rule-based classification.</p>
+</section>
+<section id="functions" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="functions"><span class="header-section-number">2.2.6</span> Functions</h3>
+<p>A function packages reusable logic into a single block.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_vsh(gr, gr_min<span class="op">=</span><span class="dv">25</span>, gr_max<span class="op">=</span><span class="dv">150</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (gr <span class="op">-</span> gr_min) <span class="op">/</span> (gr_max <span class="op">-</span> gr_min)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>vsh <span class="op">=</span> calc_vsh(<span class="dv">95</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vsh)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Functions make your code easier to test, reuse, and debug. If you find yourself copying and pasting the same code block, that is usually a sign it should become a function.</p>
+</section>
+<section id="f-strings" class="level3" data-number="2.2.7">
+<h3 data-number="2.2.7" class="anchored" data-anchor-id="f-strings"><span class="header-section-number">2.2.7</span> F-strings</h3>
+<p>F-strings (formatted string literals) are used throughout this book for creating labels, titles, and print statements. They let you embed variables directly inside a string by prefixing it with <code>f</code> and placing variables inside curly braces:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>well_name <span class="op">=</span> <span class="st">"15/9-19"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>top_depth <span class="op">=</span> <span class="fl">3120.0</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Well </span><span class="sc">{</span>well_name<span class="sc">}</span><span class="ss"> starts at </span><span class="sc">{</span>top_depth<span class="sc">}</span><span class="ss"> m"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This prints: <code>Well 15/9-19 starts at 3120.0 m</code></p>
+<p>You can also format numbers inside f-strings. This is particularly useful when displaying calculated values:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>porosity <span class="op">=</span> <span class="fl">0.18734</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Porosity: </span><span class="sc">{</span>porosity<span class="sc">:.2f}</span><span class="ss">"</span>)   <span class="co"># Porosity: 0.19</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Porosity: </span><span class="sc">{</span>porosity<span class="sc">:.1%}</span><span class="ss">"</span>)   <span class="co"># Porosity: 18.7%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="list-comprehensions" class="level3" data-number="2.2.8">
+<h3 data-number="2.2.8" class="anchored" data-anchor-id="list-comprehensions"><span class="header-section-number">2.2.8</span> List comprehensions</h3>
+<p>A list comprehension is a concise way to create a new list by transforming or filtering an existing one. Instead of writing a full for loop:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard for loop</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>clean_curves <span class="op">=</span> []</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> curve <span class="kw">in</span> [<span class="st">"GR"</span>, <span class="st">"RHOB"</span>, <span class="st">"NPHI"</span>, <span class="st">"BS"</span>]:</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> curve <span class="op">!=</span> <span class="st">"BS"</span>:</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        clean_curves.append(curve)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can write:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List comprehension</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>clean_curves <span class="op">=</span> [curve <span class="cf">for</span> curve <span class="kw">in</span> [<span class="st">"GR"</span>, <span class="st">"RHOB"</span>, <span class="st">"NPHI"</span>, <span class="st">"BS"</span>] <span class="cf">if</span> curve <span class="op">!=</span> <span class="st">"BS"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Both produce <code>['GR', 'RHOB', 'NPHI']</code>. List comprehensions appear in several examples later in this book, so it helps to recognise the pattern even if you prefer the explicit loop.</p>
+</section>
+<section id="imports-and-libraries" class="level3" data-number="2.2.9">
+<h3 data-number="2.2.9" class="anchored" data-anchor-id="imports-and-libraries"><span class="header-section-number">2.2.9</span> Imports and libraries</h3>
+<p>Python has a large ecosystem of libraries. You import what you need at the top of your file or notebook.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> lasio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Most examples in this book use these libraries:</p>
+<ul>
+<li><code>pandas</code> for tabular data</li>
+<li><code>matplotlib</code> for plotting</li>
+<li><code>lasio</code> for reading LAS files</li>
+</ul>
+</section>
+<section id="a-quick-note-on-errors" class="level3" data-number="2.2.10">
+<h3 data-number="2.2.10" class="anchored" data-anchor-id="a-quick-note-on-errors"><span class="header-section-number">2.2.10</span> A quick note on errors</h3>
+<p>When code fails, Python tells you where and why through a traceback.</p>
+<p>Typical early issues are:</p>
+<ul>
+<li>misspelled variable names</li>
+<li>wrong curve names</li>
+<li>incorrect file paths</li>
+<li>missing library installs</li>
+</ul>
+<p>The practical habit to build is to read the final line of the traceback first, then work upward to your own code.</p>
+</section>
+<section id="keep-it-practical" class="level3" data-number="2.2.11">
+<h3 data-number="2.2.11" class="anchored" data-anchor-id="keep-it-practical"><span class="header-section-number">2.2.11</span> Keep it practical</h3>
+<p>You do not need to master every Python feature before starting this book. If you can understand variables, lists, loops, conditionals, and functions, you are in a good position to follow along.</p>
+</section>
+</section>
+<section id="working-with-pandas" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="working-with-pandas"><span class="header-section-number">2.3</span> Working with pandas</h2>
+<p><a href="https://pandas.pydata.org/">pandas</a> is the most important library in this book. Nearly every example loads well log data into a pandas DataFrame, a two-dimensional table with labelled columns and an index. If you are familiar with spreadsheets, a DataFrame is the Python equivalent.</p>
+<section id="creating-a-dataframe" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="creating-a-dataframe"><span class="header-section-number">2.3.1</span> Creating a DataFrame</h3>
+<p>You can create a DataFrame from a dictionary, where the keys become column names:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'DEPTH'</span>: [<span class="fl">3120.0</span>, <span class="fl">3120.5</span>, <span class="fl">3121.0</span>, <span class="fl">3121.5</span>, <span class="fl">3122.0</span>],</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GR'</span>:    [<span class="fl">45.2</span>, <span class="fl">48.1</span>, <span class="fl">67.3</span>, <span class="fl">89.4</span>, <span class="fl">92.1</span>],</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'RHOB'</span>:  [<span class="fl">2.35</span>, <span class="fl">2.38</span>, <span class="fl">2.41</span>, <span class="fl">2.55</span>, <span class="fl">2.58</span>],</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In practice, you will rarely build DataFrames by hand. Most of the time you will create them by reading a LAS file with <code>lasio</code> or loading a CSV file with <code>pd.read_csv()</code>.</p>
+</section>
+<section id="inspecting-data" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="inspecting-data"><span class="header-section-number">2.3.2</span> Inspecting data</h3>
+<p>Once you have a DataFrame, there are several methods for quickly understanding what you are working with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df.head()        <span class="co"># First 5 rows</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df.describe()    <span class="co"># Summary statistics (mean, min, max, etc.)</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>df.info()        <span class="co"># Data types and non-null counts</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df.columns       <span class="co"># List of column names</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df.shape         <span class="co"># Number of rows and columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These are the first things you should reach for when loading a new dataset. They tell you how many rows and columns you have, what the curves are called, and whether anything is missing.</p>
+</section>
+<section id="selecting-columns" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="selecting-columns"><span class="header-section-number">2.3.3</span> Selecting columns</h3>
+<p>To select a single column, use square brackets with the column name. This returns a pandas Series:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>gr <span class="op">=</span> df[<span class="st">'GR'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To select multiple columns, pass a list of names. This returns a new DataFrame:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>subset <span class="op">=</span> df[[<span class="st">'GR'</span>, <span class="st">'RHOB'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="filtering-rows" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="filtering-rows"><span class="header-section-number">2.3.4</span> Filtering rows</h3>
+<p>You can filter rows using a condition. The condition creates a boolean mask (True/False for each row), which is then used to select only the rows where the condition is True:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rows where gamma ray exceeds 100 API</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>high_gr <span class="op">=</span> df[df[<span class="st">'GR'</span>] <span class="op">&gt;</span> <span class="dv">100</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Rows within a specific depth range</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>zone <span class="op">=</span> df[(df[<span class="st">'DEPTH'</span>] <span class="op">&gt;=</span> <span class="dv">3500</span>) <span class="op">&amp;</span> (df[<span class="st">'DEPTH'</span>] <span class="op">&lt;=</span> <span class="dv">3600</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For more precise selection, pandas provides <code>.loc[]</code> (select by label) and <code>.iloc[]</code> (select by position):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df.loc[<span class="dv">0</span>:<span class="dv">4</span>, <span class="st">'GR'</span>]       <span class="co"># Rows 0-4, GR column (by label)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">0</span>:<span class="dv">5</span>, <span class="dv">1</span>]          <span class="co"># First 5 rows, second column (by position)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="handling-missing-data" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="handling-missing-data"><span class="header-section-number">2.3.5</span> Handling missing data</h3>
+<p>Well log data almost always contains gaps. In pandas, missing values are represented as <code>NaN</code> (Not a Number). Several methods help you identify and handle them:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df.isna().<span class="bu">sum</span>()          <span class="co"># Count of missing values per column</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df.dropna()              <span class="co"># Remove rows with any missing values</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'GR'</span>].fillna(<span class="op">-</span><span class="dv">999</span>)    <span class="co"># Replace NaN with a specific value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Understanding where data is missing is a key part of any petrophysical workflow, and we will explore this in detail in later chapters.</p>
+</section>
+<section id="grouping-and-aggregation" class="level3" data-number="2.3.6">
+<h3 data-number="2.3.6" class="anchored" data-anchor-id="grouping-and-aggregation"><span class="header-section-number">2.3.6</span> Grouping and aggregation</h3>
+<p>When working with multi-well datasets, you often need to perform operations on a per-well basis. The <code>.groupby()</code> method splits the data by a column and lets you apply functions to each group:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average gamma ray per well</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">'WELL'</span>)[<span class="st">'GR'</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>.apply()</code> method lets you run a custom function on each row or group, which is used in later chapters when merging formation data with well logs.</p>
+</section>
+</section>
+<section id="working-with-numpy" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="working-with-numpy"><span class="header-section-number">2.4</span> Working with NumPy</h2>
+<p><a href="https://numpy.org/">NumPy</a> is the numerical computing library that sits underneath pandas. While you will mostly interact with data through pandas DataFrames, several examples in this book use NumPy directly for calculations and array operations.</p>
+<section id="numpy-arrays" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="numpy-arrays"><span class="header-section-number">2.4.1</span> NumPy arrays</h3>
+<p>A NumPy array is a grid of values, all of the same type. You can create one from a list:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>depths <span class="op">=</span> np.array([<span class="fl">3120.0</span>, <span class="fl">3120.5</span>, <span class="fl">3121.0</span>, <span class="fl">3121.5</span>, <span class="fl">3122.0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Pandas columns are built on top of NumPy arrays, so you can use NumPy functions directly on DataFrame columns.</p>
+</section>
+<section id="common-operations" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="common-operations"><span class="header-section-number">2.4.2</span> Common operations</h3>
+<p>These are the NumPy functions you will encounter most often in this book:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>np.mean(df[<span class="st">'GR'</span>])              <span class="co"># Mean value</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>np.percentile(df[<span class="st">'GR'</span>], <span class="dv">95</span>)    <span class="co"># 95th percentile</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>np.arange(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">10</span>)          <span class="co"># Evenly spaced values: 0, 10, 20, ..., 190</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>np.count_nonzero(df[<span class="st">'GR'</span>] <span class="op">&gt;</span> <span class="dv">100</span>)  <span class="co"># Count values meeting a condition</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>NumPy also handles the mathematical rescaling used in some of the visualisation examples, such as converting neutron porosity to density units for crossover fills.</p>
+<p>You do not need to be a NumPy expert to follow this book. Knowing that it provides fast numerical operations and recognising the <code>np.</code> prefix in code examples is sufficient.</p>
+</section>
+</section>
+<section id="learning-python" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="learning-python"><span class="header-section-number">2.5</span> Learning Python</h2>
+<p>This book is not aimed at teaching you the fundamentals of Python from scratch. However, if you are new to the language or want to strengthen your foundations, there are several excellent resources available. These cover everything from the basics of the language through to more advanced concepts such as Object Oriented Programming (OOP) and beyond.</p>
+<section id="books" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="books"><span class="header-section-number">2.5.1</span> Books</h3>
+<ul>
+<li><a href="https://learning-python.com/about-lp6e.html"><strong>Learning Python</strong></a> by Mark Lutz is a comprehensive reference for the Python language. It is detailed and thorough, making it a good book to have on your shelf.</li>
+<li><a href="https://automatetheboringstuff.com/"><strong>Automate the Boring Stuff with Python</strong></a> by Al Sweigart is freely available online and takes a practical, project-based approach to learning Python. It is an excellent starting point for complete beginners.</li>
+<li><a href="https://ehmatthes.github.io/pcc_3e/"><strong>Python Crash Course</strong></a> by Eric Matthes covers the fundamentals quickly and includes several hands-on projects.</li>
+</ul>
+</section>
+<section id="online-courses-and-tutorials" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="online-courses-and-tutorials"><span class="header-section-number">2.5.2</span> Online courses and tutorials</h3>
+<p>There are numerous online platforms offering Python courses. Rather than listing specific courses that may change or go behind paywalls, here are platforms I have found consistently useful:</p>
+<ul>
+<li><a href="https://realpython.com/"><strong>Real Python</strong></a> provides well-written tutorials on a wide range of Python topics, from the basics through to advanced data science.</li>
+<li><a href="https://docs.python.org/3/tutorial/"><strong>The official Python tutorial</strong></a> is thorough and always up to date.</li>
+<li><a href="https://www.udemy.com/"><strong>Udemy</strong></a>, <a href="https://www.coursera.org/"><strong>Coursera</strong></a>, and <a href="https://www.edx.org/"><strong>EdX</strong></a> all host beginner and intermediate Python courses, many of which are free or low cost.</li>
+</ul>
+<p>One piece of advice that I have learned over the years: take one good beginner course and then start working on your own projects. It is easy to fall into “tutorial hell” where you are constantly watching videos and running practice scripts but never building anything real. The best way to learn is by applying what you have learned to problems you actually care about.</p>
+</section>
+<section id="geoscience-specific-resources" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="geoscience-specific-resources"><span class="header-section-number">2.5.3</span> Geoscience-specific resources</h3>
+<ul>
+<li><a href="https://softwareunderground.org/"><strong>Software Underground</strong></a> is a community of geoscientists who code. Their annual Transform conferences include free tutorials on Python for geoscience, many of which are available on YouTube.</li>
+<li>My own <a href="https://www.youtube.com/c/AndyMcDonald42"><strong>YouTube channel</strong></a> covers applications of Python and machine learning in the geoscience domain, and many of the topics in this book have accompanying videos.</li>
+</ul>
+</section>
+<section id="using-ai-to-help-you-learn" class="level3" data-number="2.5.4">
+<h3 data-number="2.5.4" class="anchored" data-anchor-id="using-ai-to-help-you-learn"><span class="header-section-number">2.5.4</span> Using AI to help you learn</h3>
+<p>Tools like ChatGPT and Claude can be useful learning companions. You can ask them to explain a piece of code, generate a practice exercise, or help you debug an error message. This can speed up the learning process significantly, especially when you are stuck on a specific concept.</p>
+<p>However, be aware that AI-generated code is not always correct. It is important to understand what the code is doing rather than simply copying and pasting it. Use these tools as a tutor, not as a shortcut.</p>
+</section>
+</section>
+<section id="writing-better-python-code" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="writing-better-python-code"><span class="header-section-number">2.6</span> Writing Better Python Code</h2>
+<p>As you start writing more Python, a few simple habits will make your code easier to understand, maintain, and share with others. You do not need to follow these rigidly from day one, but being aware of them early will save you time later.</p>
+<section id="use-meaningful-variable-names" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="use-meaningful-variable-names"><span class="header-section-number">2.6.1</span> Use meaningful variable names</h3>
+<p>When working quickly, it is tempting to use short variable names like <code>x</code>, <code>d</code>, or <code>v1</code>. However, when you come back to your code weeks or months later, these names will not tell you anything.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unclear</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">95</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> (x <span class="op">-</span> <span class="dv">25</span>) <span class="op">/</span> (<span class="dv">150</span> <span class="op">-</span> <span class="dv">25</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>gr_value <span class="op">=</span> <span class="dv">95</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>vshale <span class="op">=</span> (gr_value <span class="op">-</span> gr_clean) <span class="op">/</span> (gr_shale <span class="op">-</span> gr_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In well log work, using the curve mnemonic or a descriptive name makes a significant difference to readability.</p>
+</section>
+<section id="add-comments-that-explain-the-why" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="add-comments-that-explain-the-why"><span class="header-section-number">2.6.2</span> Add comments that explain the why</h3>
+<p>Comments should explain <em>why</em> something is done, not <em>what</em> the code does. The code itself already tells you the what.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bad: multiply by 0.6</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> gri <span class="op">*</span> <span class="fl">0.6</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Good: apply Larionov correction for Tertiary rocks</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>clay_shale_ratio <span class="op">=</span> <span class="fl">0.6</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> gri <span class="op">*</span> clay_shale_ratio</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="avoid-magic-numbers" class="level3" data-number="2.6.3">
+<h3 data-number="2.6.3" class="anchored" data-anchor-id="avoid-magic-numbers"><span class="header-section-number">2.6.3</span> Avoid magic numbers</h3>
+<p>A magic number is a value that appears in your code without explanation. If the same value appears in multiple places and you later need to change it, you have to find and update every instance. Assigning it to a named variable solves both problems:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instead of:</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> gr <span class="op">&gt;</span> <span class="dv">150</span>:</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    flag <span class="op">=</span> <span class="st">"high"</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use:</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>GR_SHALE_CUTOFF <span class="op">=</span> <span class="dv">150</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> gr <span class="op">&gt;</span> GR_SHALE_CUTOFF:</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    flag <span class="op">=</span> <span class="st">"high"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This makes the intent of the code immediately clear, even to someone who has never seen it before.</p>
+</section>
+</section>
+<section id="python-output-for-geoscience-data" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="python-output-for-geoscience-data"><span class="header-section-number">2.7</span> Python Output for Geoscience Data</h2>
+<p>As geoscientists, one thing we either love (or hate depending on your point of view) are tables! We see them everywhere from geological reports to lab test results. Oftentimes, this data is either in the form of a report or an Excel spreadsheet. However, what do we use if we want to work with tables in Python?</p>
+<p>You may be familiar with using Pandas to create, manipulate and display tabular data, which is great, but sometimes you want to add a bit of style to the table in the console. If you do, then there are a few simple python libraries that can quickly display this kind of data directly in the console without needing to touch Pandas.</p>
+<p>This is great if you are working with lists or dictionaries, and don’t want to have to manage several Pandas dataframes.</p>
+<p>Also, the output from these libraries is really handy when you are creating a command line interface (CLI) only app for your colleagues. It maintains readability and also makes things interesting.</p>
+<p>In this section we will look at three simple libraries that can improve your tabular output to the console:</p>
+<ul>
+<li>pprint</li>
+<li>tabulate</li>
+<li>rich</li>
+</ul>
+<section id="pprint" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="pprint"><span class="header-section-number">2.7.1</span> pprint</h3>
+<p>pprint is a module that is part of the Python standard library. It is used to format Python objects, such as dictionaries, lists and tuples into a format that you can actually see and quickly scan.</p>
+<p>In this example, we will take some well and curve metadata from a las header and store it in a dictionary.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>las_header <span class="op">=</span> {</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Well"</span>: {</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"WELL"</span>: <span class="st">"Random-02"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"FLD"</span>: <span class="st">"North Sea"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SRVC"</span>: <span class="st">"Example Energy Ltd."</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"STRT"</span>: <span class="fl">3120.0</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"STOP"</span>: <span class="fl">3245.0</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"STEP"</span>: <span class="fl">0.5</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Curves"</span>: [</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"mnemonic"</span>: <span class="st">"GR"</span>,   <span class="st">"unit"</span>: <span class="st">"API"</span>, <span class="st">"null"</span>: <span class="op">-</span><span class="fl">999.25</span>, <span class="st">"count_nulls"</span>: <span class="dv">0</span>},</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"mnemonic"</span>: <span class="st">"RHOB"</span>, <span class="st">"unit"</span>: <span class="st">"g/cc"</span>,<span class="st">"null"</span>: <span class="op">-</span><span class="fl">999.25</span>, <span class="st">"count_nulls"</span>: <span class="dv">12</span>},</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"mnemonic"</span>: <span class="st">"NPHI"</span>, <span class="st">"unit"</span>: <span class="st">"v/v"</span>, <span class="st">"null"</span>: <span class="op">-</span><span class="fl">999.25</span>, <span class="st">"count_nulls"</span>: <span class="dv">4</span>},</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Params"</span>: {<span class="st">"NULL"</span>: <span class="op">-</span><span class="fl">999.25</span>, <span class="st">"COMP"</span>: <span class="st">"ExampleCo"</span>},</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Raw print():"</span>)</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(las_header) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If we just use the conventional <code>print</code> method from Python, we end up with the following output, which can be difficult to read and find the right keys. Especially if we are dealing with nested dictionaries.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*_Fj4qzMW3tUw_Gyzy8R7FQ.png" class="img-fluid figure-img"></p>
+<figcaption>Image: None</figcaption>
+</figure>
+</div>
+<p>However, when we use <code>pprint</code> with the following setup, we can control the width of the output and indentations and preserve the order of the dictionaries by setting <code>sort_dicts=False</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Pretty print():"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>pprint(las_header, width<span class="op">=</span><span class="dv">100</span>, indent<span class="op">=</span><span class="dv">2</span>, sort_dicts<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We get back a much nicer and much more readable output.</p>
+<p><a href="https://miro.medium.com/v2/resize:fit:700/1*TTCrYSzvdO9OSGgAlTjjkQ.png">Image: None</a></p>
+<p>Using pprint to format the dictionary console output.</p>
+<p>All of our dictionary keys and values are nicely formatted, making it easier to read and find values that we are looking for.</p>
+<p>To make it even better, we can use <code>cprint</code> to bring some colour to our output.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prettyprinter <span class="im">import</span> cpprint  <span class="co"># coloured pretty print</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>well <span class="op">=</span> {</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"well"</span>: {<span class="st">"name"</span>: <span class="st">"Random-02"</span>, <span class="st">"field"</span>: <span class="st">"North Sea"</span>, <span class="st">"null"</span>: <span class="op">-</span><span class="fl">999.25</span>},</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"curves"</span>: [</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"mnemonic"</span>: <span class="st">"GR"</span>,   <span class="st">"unit"</span>: <span class="st">"API"</span>,  <span class="st">"nulls"</span>: <span class="dv">0</span>,  <span class="st">"depth_range"</span>: [<span class="fl">3120.0</span>, <span class="fl">3245.0</span>]},</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"mnemonic"</span>: <span class="st">"RHOB"</span>, <span class="st">"unit"</span>: <span class="st">"g/cc"</span>, <span class="st">"nulls"</span>: <span class="dv">12</span>, <span class="st">"depth_range"</span>: [<span class="fl">3120.0</span>, <span class="fl">3245.0</span>]},</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"mnemonic"</span>: <span class="st">"NPHI"</span>, <span class="st">"unit"</span>: <span class="st">"v/v"</span>,  <span class="st">"nulls"</span>: <span class="dv">4</span>,  <span class="st">"depth_range"</span>: [<span class="fl">3120.0</span>, <span class="fl">3245.0</span>]},</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"qc"</span>: {<span class="st">"despike"</span>: <span class="va">True</span>, <span class="st">"gap_fill"</span>: <span class="st">"linear"</span>},</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>cpprint(well)  <span class="co"># nice defaults, colour if your terminal supports ANSI</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When we run the above code, we get back the following output which helps improve the readability by highlight different data types in different colours.</p>
+<p><a href="https://miro.medium.com/v2/resize:fit:700/1*dc1xPUcCPU5XeT-rlJMi8A.png">Image: None</a></p>
+<p>pprint dictionary output provides a more readable structure compared to the default Python output.</p>
+</section>
+<section id="tabulate" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="tabulate"><span class="header-section-number">2.7.2</span> tabulate</h3>
+<p><code>tabulate</code> is another great little library I have used a number of times to create tabular output.</p>
+<p>It takes lists or dictionaries and converts them into clean and easy-to-read tables.</p>
+<p>For example, if we have some metadata about our well log data, we can put it into a format that is better than the standard print method.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>curves <span class="op">=</span> [</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"Mnemonic"</span>: <span class="st">"GR"</span>,   <span class="st">"Unit"</span>: <span class="st">"API"</span>,  <span class="st">"Samples"</span>: <span class="dv">251</span>, <span class="st">"Nulls"</span>: <span class="dv">0</span>,  <span class="st">"p99"</span>: <span class="dv">118</span>},</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"Mnemonic"</span>: <span class="st">"RHOB"</span>, <span class="st">"Unit"</span>: <span class="st">"g/cc"</span>, <span class="st">"Samples"</span>: <span class="dv">251</span>, <span class="st">"Nulls"</span>: <span class="dv">12</span>, <span class="st">"p99"</span>: <span class="fl">2.86</span>},</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"Mnemonic"</span>: <span class="st">"NPHI"</span>, <span class="st">"Unit"</span>: <span class="st">"v/v"</span>,  <span class="st">"Samples"</span>: <span class="dv">251</span>, <span class="st">"Nulls"</span>: <span class="dv">4</span>,  <span class="st">"p99"</span>: <span class="fl">0.39</span>},</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tabulate(curves, headers<span class="op">=</span><span class="st">"keys"</span>, tablefmt<span class="op">=</span><span class="st">"github"</span>,</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>               floatfmt<span class="op">=</span><span class="st">".2f"</span>, colalign<span class="op">=</span>(<span class="st">"left"</span>,<span class="st">"left"</span>,<span class="st">"right"</span>,<span class="st">"right"</span>,<span class="st">"right"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When we run the above code, we get the following output containing a summary of our curves.</p>
+<p><a href="https://miro.medium.com/v2/resize:fit:700/1*9tb7BQFHfS3JI7Cx_0SuHA.png">Image: None</a></p>
+<p>Simple example of a table generated using tabulate.</p>
+<p>Whilst the above code is manually entered, we could automate the process of summarising las files by creating a custom function to which we can pass our las file into.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> lasio</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> summarise_curves(lasfile, tablefmt<span class="op">=</span><span class="st">"github"</span>):</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Summarise curves from a LAS file into a tabular report.</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co">    lasfile : str or lasio.LASFile</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co">        Path to a LAS file, or an already-loaded lasio.LASFile object.</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co">    tablefmt : str</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co">        Table style format passed to tabulate (default: 'github').</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    las <span class="op">=</span> lasio.read(lasfile) <span class="cf">if</span> <span class="bu">isinstance</span>(lasfile, <span class="bu">str</span>) <span class="cf">else</span> lasfile</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    null <span class="op">=</span> las.well.NULL.value <span class="cf">if</span> <span class="st">"NULL"</span> <span class="kw">in</span> las.well <span class="cf">else</span> <span class="op">-</span><span class="fl">999.25</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    curves <span class="op">=</span> []</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> curve <span class="kw">in</span> las.curves:</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> las[curve.mnemonic]</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>        samples <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>        nulls <span class="op">=</span> np.count_nonzero(data <span class="op">==</span> null)</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>        valid <span class="op">=</span> data[data <span class="op">!=</span> null]</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>        p99 <span class="op">=</span> np.percentile(valid, <span class="dv">99</span>) <span class="cf">if</span> <span class="bu">len</span>(valid) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> np.nan</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>        curves.append({</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Mnemonic"</span>: curve.mnemonic,</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Unit"</span>: curve.unit,</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Samples"</span>: samples,</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Nulls"</span>: nulls,</span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">"p99"</span>: p99,</span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tabulate(curves,</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>                    headers<span class="op">=</span><span class="st">"keys"</span>,</span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>                    tablefmt<span class="op">=</span>tablefmt,</span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>                    floatfmt<span class="op">=</span><span class="st">".2f"</span>,</span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>                    colalign<span class="op">=</span>(<span class="st">"left"</span>,<span class="st">"left"</span>,<span class="st">"right"</span>,<span class="st">"right"</span>,<span class="st">"right"</span>))</span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(summarise_curves(<span class="st">"Random-02.las"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>tabulate</code> also comes with a range of built-in table styles, which can make your output table more visually appealing and readable.</p>
+<p>With just a small change, you can output the same data as a plain text table, a grid, or even Markdown-ready for dropping straight into a report.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>formations <span class="op">=</span> [</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"Formation"</span>: <span class="st">"Random Sandstone Fm"</span>, <span class="st">"Period"</span>: <span class="st">"Early Jurassic"</span>, <span class="st">"Lithology"</span>: <span class="st">"Sandstone"</span>, <span class="st">"Avg Porosity"</span>: <span class="fl">0.21</span>},</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"Formation"</span>: <span class="st">"Shaleshire Fm"</span>,       <span class="st">"Period"</span>: <span class="st">"Late Triassic"</span>,  <span class="st">"Lithology"</span>: <span class="st">"Shale"</span>,     <span class="st">"Avg Porosity"</span>: <span class="fl">0.07</span>},</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"Formation"</span>: <span class="st">"Carbonate Ridge Fm"</span>,  <span class="st">"Period"</span>: <span class="st">"Early Cret."</span>,    <span class="st">"Lithology"</span>: <span class="st">"Limestone"</span>, <span class="st">"Avg Porosity"</span>: <span class="fl">0.16</span>},</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> style <span class="kw">in</span> [<span class="st">"github"</span>, <span class="st">"grid"</span>, <span class="st">"fancy_grid"</span>]:</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Table format: </span><span class="sc">{</span>style<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tabulate(formations, headers<span class="op">=</span><span class="st">"keys"</span>, tablefmt<span class="op">=</span>style, floatfmt<span class="op">=</span><span class="st">".2f"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When the above code is run, we get back the following output showing the different styles.</p>
+<p><a href="https://miro.medium.com/v2/resize:fit:700/1*lC7qyNkvLuDYgq02T70V7w.png">Image: None</a></p>
+<p>Example of different tabulate table styles.</p>
+</section>
+<section id="rich" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="rich"><span class="header-section-number">2.7.3</span> rich</h3>
+<p><strong><a href="https://pypi.org/project/rich/">rich</a></strong> <a href="https://pypi.org/project/rich/"></a>is a great library which allows you to fully customise the terminal output by changing text colour, displaying colour coded syntax, and creating very nice tables.</p>
+<p>I previously wrote about this in the following article:</p>
+<p><strong><a href="https://medium.com/python-in-plain-english/bring-your-python-terminal-to-life-with-colour-and-clarity-dce6bfdfbcbe">Bring Your Python Terminal to Life With Colour and Clarity</a></strong></p>
+<p>To install the library, we call upon the following:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install rich</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And to get started using rich for tables, we can call upon the following code.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich <span class="im">import</span> box</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> Table(title<span class="op">=</span><span class="st">"Curve Inventory - Random-02"</span>, box<span class="op">=</span>box.SIMPLE_HEAVY)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Mnemonic"</span>, style<span class="op">=</span><span class="st">"cyan"</span>, no_wrap<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Unit"</span>, justify<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Samples"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"Nulls"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>table.add_column(<span class="st">"p99"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> [</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"GR"</span>,   <span class="st">"API"</span>,  <span class="st">"251"</span>,  <span class="st">"0"</span>,  <span class="st">"118"</span>),</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"RHOB"</span>, <span class="st">"g/cc"</span>, <span class="st">"251"</span>,  <span class="st">"12"</span>, <span class="st">"2.86"</span>),</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"NPHI"</span>, <span class="st">"v/v"</span>,  <span class="st">"251"</span>,  <span class="st">"4"</span>,  <span class="st">"0.39"</span>),</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r <span class="kw">in</span> rows:</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>    table.add_row(<span class="op">*</span>r)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>We can see that we first need to create a <a href="https://rich.readthedocs.io/en/stable/console.html"><code>Console()</code></a> object, which allows us to have complete control over the formatting of text within the terminal.</p>
+<p>Next, we create a <code>Table()</code> object, and we can simply add columns to the table by calling upon <code>table.add_column()</code></p>
+<p>Once we have the columns of our table setup, we can begin populating a list of our data and then adding the rows iteratively to the table by calling upon <code>table.add_row()</code></p>
+<p>When we run the app, we can get the following output.</p>
+<p><a href="https://miro.medium.com/v2/resize:fit:700/1*P8i-rQvXn2-YteTOXdb0vg.png">Image: None</a></p>
+<p>Not only does rich allow us to display tables, it can also be handy for displaying tree and hierarchy structures.</p>
+<p>For example, we may have a series of well log curves in several wells, and we have built up a dictionary containing that information. We can then create a <code>Tree()</code> instance and then loop over the contents of the dictionary to add it to the tree.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.tree <span class="im">import</span> Tree</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>project <span class="op">=</span> {</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Random-01"</span>: [<span class="st">"GR"</span>, <span class="st">"RHOB"</span>, <span class="st">"NPHI"</span>, <span class="st">"DT"</span>],</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Random-02"</span>: [<span class="st">"GR"</span>, <span class="st">"RHOB"</span>, <span class="st">"NPHI"</span>, <span class="st">"DT"</span>, <span class="st">"PEF"</span>],</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Random-03"</span>: [<span class="st">"GR"</span>, <span class="st">"RHOB"</span>, <span class="st">"DT"</span>],</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>root <span class="op">=</span> Tree(<span class="st">"[bold]Project: West Random Basin[/]"</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> well, curves <span class="kw">in</span> project.items():</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    well_node <span class="op">=</span> root.add(<span class="ss">f"[cyan]</span><span class="sc">{</span>well<span class="sc">}</span><span class="ss">[/] ([green]</span><span class="sc">{</span><span class="bu">len</span>(curves)<span class="sc">}</span><span class="ss"> curves[/])"</span>)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> curves:</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>        well_node.add(<span class="ss">f"[white]</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">[/]"</span>)</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(root)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="https://miro.medium.com/v2/resize:fit:700/1*9ypN2oI91ArnMkp6xeAcOA.png">Image: None</a></p>
+<p>We can also get more complex with tables and trees, and combine both of them to give a nice output for a Stratigraphic Overview</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.console <span class="im">import</span> Console</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.tree <span class="im">import</span> Tree</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich.table <span class="im">import</span> Table</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rich <span class="im">import</span> box</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>console <span class="op">=</span> Console()</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>stratigraphy <span class="op">=</span> {</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"West Random Basin"</span>: {</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Random North Field"</span>: {</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Random Sandstone Fm"</span>: {</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">"meta"</span>: {<span class="st">"period"</span>: <span class="st">"Early Jurassic"</span>, <span class="st">"age_Ma"</span>: <span class="st">"201–174"</span>},</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">"members"</span>: [</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>                    {<span class="st">"Member"</span>: <span class="st">"Upper SS"</span>,  <span class="st">"Lithology"</span>: <span class="st">"[gold1]Sandstone[/]"</span>, <span class="st">"Env"</span>: <span class="st">"Shoreface"</span>,    <span class="st">"Age (Ma)"</span>: <span class="dv">176</span>, <span class="st">"N:G"</span>: <span class="fl">0.72</span>},</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>                    {<span class="st">"Member"</span>: <span class="st">"Middle SL"</span>, <span class="st">"Lithology"</span>: <span class="st">"[khaki1]Siltstone[/]"</span>, <span class="st">"Env"</span>: <span class="st">"Lower shore"</span>, <span class="st">"Age (Ma)"</span>: <span class="dv">179</span>, <span class="st">"N:G"</span>: <span class="fl">0.41</span>},</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>                    {<span class="st">"Member"</span>: <span class="st">"Lower SS"</span>,  <span class="st">"Lithology"</span>: <span class="st">"[gold1]Sandstone[/]"</span>, <span class="st">"Env"</span>: <span class="st">"Delta front"</span>, <span class="st">"Age (Ma)"</span>: <span class="dv">182</span>, <span class="st">"N:G"</span>: <span class="fl">0.66</span>},</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>                ],</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>            },</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Shaleshire Fm"</span>: {</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">"meta"</span>: {<span class="st">"period"</span>: <span class="st">"Late Triassic"</span>, <span class="st">"age_Ma"</span>: <span class="st">"227–208"</span>},</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">"members"</span>: [</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>                    {<span class="st">"Member"</span>: <span class="st">"Upper Sh"</span>,  <span class="st">"Lithology"</span>: <span class="st">"[grey62]Shale[/]"</span>,     <span class="st">"Env"</span>: <span class="st">"Offshore"</span>,    <span class="st">"Age (Ma)"</span>: <span class="dv">211</span>, <span class="st">"N:G"</span>: <span class="fl">0.05</span>},</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>                    {<span class="st">"Member"</span>: <span class="st">"Lower Sh"</span>,  <span class="st">"Lithology"</span>: <span class="st">"[grey62]Shale[/]"</span>,     <span class="st">"Env"</span>: <span class="st">"Basinal"</span>,     <span class="st">"Age (Ma)"</span>: <span class="dv">219</span>, <span class="st">"N:G"</span>: <span class="fl">0.03</span>},</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>                ],</span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>            },</span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Random South Field"</span>: {</span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Carbonate Ridge Fm"</span>: {</span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">"meta"</span>: {<span class="st">"period"</span>: <span class="st">"Early Cretaceous"</span>, <span class="st">"age_Ma"</span>: <span class="st">"145–125"</span>},</span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>                <span class="st">"members"</span>: [</span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>                    {<span class="st">"Member"</span>: <span class="st">"Upper Ls"</span>,  <span class="st">"Lithology"</span>: <span class="st">"[bright_white]Limestone[/]"</span>, <span class="st">"Env"</span>: <span class="st">"Platform"</span>, <span class="st">"Age (Ma)"</span>: <span class="dv">131</span>, <span class="st">"N:G"</span>: <span class="fl">0.58</span>},</span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>                    {<span class="st">"Member"</span>: <span class="st">"Lower Dl"</span>,  <span class="st">"Lithology"</span>: <span class="st">"[aquamarine1]Dolomite[/]"</span>,   <span class="st">"Env"</span>: <span class="st">"Shoal"</span>,    <span class="st">"Age (Ma)"</span>: <span class="dv">138</span>, <span class="st">"N:G"</span>: <span class="fl">0.64</span>},</span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>                ],</span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a>root <span class="op">=</span> Tree(<span class="st">"[bold]Stratigraphic Overview[/]"</span>)</span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-41"><a href="#cb37-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> basin, fields <span class="kw">in</span> stratigraphy.items():</span>
+<span id="cb37-42"><a href="#cb37-42" aria-hidden="true" tabindex="-1"></a>    basin_node <span class="op">=</span> root.add(<span class="ss">f"[cyan]</span><span class="sc">{</span>basin<span class="sc">}</span><span class="ss">[/]"</span>)</span>
+<span id="cb37-43"><a href="#cb37-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> field, formations <span class="kw">in</span> fields.items():</span>
+<span id="cb37-44"><a href="#cb37-44" aria-hidden="true" tabindex="-1"></a>        field_node <span class="op">=</span> basin_node.add(<span class="ss">f"[green]</span><span class="sc">{</span>field<span class="sc">}</span><span class="ss">[/]"</span>)</span>
+<span id="cb37-45"><a href="#cb37-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> fm_name, fm_data <span class="kw">in</span> formations.items():</span>
+<span id="cb37-46"><a href="#cb37-46" aria-hidden="true" tabindex="-1"></a>            period <span class="op">=</span> fm_data[<span class="st">"meta"</span>][<span class="st">"period"</span>]</span>
+<span id="cb37-47"><a href="#cb37-47" aria-hidden="true" tabindex="-1"></a>            age_band <span class="op">=</span> fm_data[<span class="st">"meta"</span>][<span class="st">"age_Ma"</span>]</span>
+<span id="cb37-48"><a href="#cb37-48" aria-hidden="true" tabindex="-1"></a>            fm_node <span class="op">=</span> field_node.add(<span class="ss">f"[bold white]</span><span class="sc">{</span>fm_name<span class="sc">}</span><span class="ss">[/]  •  [magenta]</span><span class="sc">{</span>period<span class="sc">}</span><span class="ss">[/] ([italic]</span><span class="sc">{</span>age_band<span class="sc">}</span><span class="ss"> Ma[/])"</span>)</span>
+<span id="cb37-49"><a href="#cb37-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-50"><a href="#cb37-50" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Mini table per formation</span></span>
+<span id="cb37-51"><a href="#cb37-51" aria-hidden="true" tabindex="-1"></a>            tbl <span class="op">=</span> Table(box<span class="op">=</span>box.SIMPLE_HEAVY, show_header<span class="op">=</span><span class="va">True</span>, header_style<span class="op">=</span><span class="st">"bold"</span>, expand<span class="op">=</span><span class="va">False</span>, padding<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb37-52"><a href="#cb37-52" aria-hidden="true" tabindex="-1"></a>            tbl.add_column(<span class="st">"Member"</span>)</span>
+<span id="cb37-53"><a href="#cb37-53" aria-hidden="true" tabindex="-1"></a>            tbl.add_column(<span class="st">"Lithology"</span>)</span>
+<span id="cb37-54"><a href="#cb37-54" aria-hidden="true" tabindex="-1"></a>            tbl.add_column(<span class="st">"Env"</span>)</span>
+<span id="cb37-55"><a href="#cb37-55" aria-hidden="true" tabindex="-1"></a>            tbl.add_column(<span class="st">"Age (Ma)"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb37-56"><a href="#cb37-56" aria-hidden="true" tabindex="-1"></a>            tbl.add_column(<span class="st">"N:G"</span>, justify<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb37-57"><a href="#cb37-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-58"><a href="#cb37-58" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> m <span class="kw">in</span> fm_data[<span class="st">"members"</span>]:</span>
+<span id="cb37-59"><a href="#cb37-59" aria-hidden="true" tabindex="-1"></a>                tbl.add_row(</span>
+<span id="cb37-60"><a href="#cb37-60" aria-hidden="true" tabindex="-1"></a>                    m[<span class="st">"Member"</span>],</span>
+<span id="cb37-61"><a href="#cb37-61" aria-hidden="true" tabindex="-1"></a>                    m[<span class="st">"Lithology"</span>],</span>
+<span id="cb37-62"><a href="#cb37-62" aria-hidden="true" tabindex="-1"></a>                    m[<span class="st">"Env"</span>],</span>
+<span id="cb37-63"><a href="#cb37-63" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"</span><span class="sc">{</span>m[<span class="st">'Age (Ma)'</span>]<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb37-64"><a href="#cb37-64" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f"</span><span class="sc">{</span>m[<span class="st">'N:G'</span>]<span class="sc">:.2f}</span><span class="ss">"</span>,</span>
+<span id="cb37-65"><a href="#cb37-65" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb37-66"><a href="#cb37-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-67"><a href="#cb37-67" aria-hidden="true" tabindex="-1"></a>            fm_node.add(tbl)</span>
+<span id="cb37-68"><a href="#cb37-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-69"><a href="#cb37-69" aria-hidden="true" tabindex="-1"></a>console.<span class="bu">print</span>(root)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When we run the above code, we get back the following output, which is very readable and would be a great addition to a console based reporting app.</p>
+<p><a href="https://miro.medium.com/v2/resize:fit:700/1*smdx3KXpyJ-jRaW53aE46A.png">Image: None</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/why-python-essential.html" class="pagination-link" aria-label="Why Python is Essential in Geoscience">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why Python is Essential in Geoscience</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/well-data-files.html" class="pagination-link" aria-label="Well Data File Formats">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Well Data File Formats</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
